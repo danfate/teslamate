@@ -2,8 +2,9 @@ name: docker-grafana
 
 on:
   push:
-    # 需要匹配“指定后缀的 tag”——请把 "-grafana" 替换成你想要的后缀
-
+    tags:
+      - 'amap*'
+    
 
 jobs:
   build:
