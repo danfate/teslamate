@@ -3,16 +3,8 @@ name: docker-grafana
 on:
   push:
     # 需要匹配“指定后缀的 tag”——请把 "-grafana" 替换成你想要的后缀
-    tags:
-      - amap*
 
-permissions:
-  contents: read
-
-env:
-  # 占位：请改成你的 Docker Hub 镜像名，如：yourname/yourimage-grafana
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/grafana-amap
-
+    
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -33,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.IMAGE_NAME }}
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/grafana-amap
           # 推送策略：
           # - latest：永远更新
           # - git tag：把当前触发的 tag 原样作为镜像 tag
