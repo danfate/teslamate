@@ -35,6 +35,9 @@ ENV GF_ANALYTICS_REPORTING_ENABLED=false \
 
 COPY --from=legal /legal/ /usr/share/doc/teslamate/
 
+USER root
+RUN apk add --no-cache postgresql-client
+
 USER grafana
 
 COPY grafana/logo.svg /usr/share/grafana/public/build/img/grafana_icon.svg
@@ -50,5 +53,9 @@ COPY grafana/dashboards.yml /etc/grafana/provisioning/dashboards/
 COPY grafana/dashboards/internal/*.json /dashboards_internal/
 COPY grafana/dashboards/reports/*.json /dashboards_reports/
 COPY grafana/dashboards/*.json /dashboards/
+COPY grafana/proc.sql /proc.sql
+COPY grafana/run_init_sql.sh /run_init_sql.sh
+
+ENTRYPOINT ["/bin/bash", "/run_init_sql.sh"]
 
 EXPOSE 3000

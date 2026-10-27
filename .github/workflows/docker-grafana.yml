@@ -1,10 +1,10 @@
 name: docker-grafana
 
 on:
+  workflow_dispatch:
   push:
     tags:
-      - 'amap*'
-    
+      - "v*"
 
 jobs:
   build:
@@ -37,7 +37,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./grafana
+          context: .
           file: ./grafana/Dockerfile
           platforms: linux/amd64
           push: true

@@ -1250,10 +1250,13 @@
       "maxDataPoints": 1,
       "options": {
         "basemap": {
-          "config": {},
+          "config": {
+            "url": "https://webrd0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
+            "attribution": "© 高德地图"
+          },
           "name": "Layer 0",
           "tooltip": true,
-          "type": "osm-standard"
+          "type": "xyz"
         },
         "controls": {
           "mouseWheelZoom": true,
@@ -1338,7 +1341,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "WITH charge_data AS (\nSELECT COALESCE(geofence.name, CONCAT_WS(', ', COALESCE(address.name, nullif(CONCAT_WS(' ', address.road, address.house_number), '')), COALESCE(address.city, address.neighbourhood))) AS loc_nm\n, AVG(position.latitude) AS latitude\n, AVG(position.longitude) AS longitude\n, sum(charge.charge_energy_added) AS chg_total\n, count(*) as charges\nFROM charging_processes charge\nLEFT JOIN addresses address ON charge.address_id = address.id\nLEFT JOIN positions position ON charge.position_id = position.id\nLEFT JOIN geofences geofence ON charge.geofence_id = geofence.id\nWHERE $__timeFilter(charge.end_date)\nAND charge.duration_min >= $min_duration\nAND charge.car_id = $car_id\nAND ('${geofence:pipe}' = '-1' OR charge.geofence_id in ($geofence))\nGROUP BY COALESCE(geofence.name, CONCAT_WS(', ', COALESCE(address.name, nullif(CONCAT_WS(' ', address.road, address.house_number), '')), COALESCE(address.city, address.neighbourhood)))\n) \nSELECT loc_nm\n\t,latitude\n\t,longitude\n\t,chg_total\n\t,chg_total * 1.0 / (SELECT sum(chg_total) FROM charge_data) * 100   AS pct\n\t,charges\nFROM charge_data",
+          "rawSql": "WITH converted_charges AS (\nSELECT COALESCE(geofence.name, CONCAT_WS(', ', COALESCE(address.name, nullif(CONCAT_WS(' ', address.road, address.house_number), '')), COALESCE(address.city, address.neighbourhood))) AS loc_nm\n, (wgs84_to_gcj02(position.latitude, position.longitude)).gcjLat AS gcj_latitude\n, (wgs84_to_gcj02(position.latitude, position.longitude)).gcjLon AS gcj_longitude\n, charge.charge_energy_added\nFROM charging_processes charge\nLEFT JOIN addresses address ON charge.address_id = address.id\nLEFT JOIN positions position ON charge.position_id = position.id\nLEFT JOIN geofences geofence ON charge.geofence_id = geofence.id\nWHERE $__timeFilter(charge.end_date)\nAND charge.duration_min >= $min_duration\nAND charge.car_id = $car_id\nAND ('${geofence:pipe}' = '-1' OR charge.geofence_id in ($geofence))\n),\ncharge_data AS (\nSELECT loc_nm\n, AVG(gcj_latitude) AS latitude\n, AVG(gcj_longitude) AS longitude\n, sum(charge_energy_added) AS chg_total\n, count(*) AS charges\nFROM converted_charges\nGROUP BY loc_nm\n)\nSELECT loc_nm\n\t,latitude\n\t,longitude\n\t,chg_total\n\t,chg_total * 1.0 / (SELECT sum(chg_total) FROM charge_data) * 100   AS pct\n\t,charges\nFROM charge_data",
           "refId": "A",
           "sql": {
             "columns": [
