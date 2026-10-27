@@ -1,9 +1,9 @@
-FROM elixir:1.19.5-otp-26 AS builder
+FROM elixir:1.20.3-otp-29 AS builder
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt-get update \
-    && apt-get install -y ca-certificates curl gnupg zstd brotli \
+    && apt-get install -y ca-certificates curl gnupg brotli \
     && mkdir -p /etc/apt/keyrings \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
      | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
@@ -19,31 +19,36 @@ RUN mix local.rebar --force && \
     mix local.hex --force
 
 ENV MIX_ENV=prod
-WORKDIR /opt/app
+WORKDIR /opt/app/elixir
 
-COPY mix.exs mix.lock ./
+COPY elixir/mix.exs elixir/mix.lock ./
 RUN mix deps.get --only $MIX_ENV
 
-COPY config/$MIX_ENV.exs config/$MIX_ENV.exs
-COPY config/config.exs config/config.exs
+COPY elixir/config/$MIX_ENV.exs config/$MIX_ENV.exs
+COPY elixir/config/config.exs config/config.exs
 RUN mix deps.compile
 
-COPY assets/package.json assets/package-lock.json ./assets/
+COPY elixir/assets/package.json elixir/assets/package-lock.json ./assets/
 RUN npm ci --prefix ./assets --progress=false --no-audit --loglevel=error
 
-COPY assets assets
-COPY priv/static priv/static
+COPY elixir/assets assets
+COPY elixir/priv/static priv/static
 RUN mix assets.deploy
 
-COPY lib lib
-COPY priv/repo/migrations priv/repo/migrations
-COPY priv/gettext priv/gettext
-COPY grafana/dashboards grafana/dashboards
-COPY VERSION VERSION
+COPY elixir/lib lib
+COPY elixir/priv/repo/migrations priv/repo/migrations
+COPY elixir/priv/gettext priv/gettext
+COPY grafana/dashboards ../grafana/dashboards
+COPY VERSION ../VERSION
+COPY NOTICE LICENSE ../
 RUN mix compile
 
-COPY config/runtime.exs config/runtime.exs
-RUN SKIP_LOCALE_DOWNLOAD=true mix release --path /opt/built
+COPY elixir/config/runtime.exs config/runtime.exs
+RUN mix release --path /opt/built
+
+# Read-only here: --chmod on the final COPY would also apply to the directory
+# it creates and lock out the runtime user.
+COPY --chmod=444 NOTICE LICENSE /opt/legal/
 
 ########################################################################
 
@@ -56,11 +61,11 @@ ENV LANG=C.UTF-8 \
 WORKDIR $HOME
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates \
         libodbc2 \
         libsctp1 \
         libssl3t64 \
         libstdc++6 \
-        netcat-openbsd \
         tini \
         tzdata \
     && apt-get clean \
@@ -68,6 +73,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && groupadd --gid 10001 --system nonroot \
     && useradd  --uid 10000 --system --gid nonroot --home-dir /home/nonroot --shell /sbin/nologin nonroot \
     && chown -R nonroot:nonroot .
+
+COPY --from=builder /opt/legal/ /usr/share/doc/teslamate/
 
 USER nonroot:nonroot
 COPY --chown=nonroot:nonroot --chmod=555 entrypoint.sh /

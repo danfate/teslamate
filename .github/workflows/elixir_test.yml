@@ -4,12 +4,14 @@ on:
   workflow_call:
 
 env:
-  CACHE_NAME_DEPS: cache-elixir-deps
-  CACHE_NAME_COMPILED_TEST: cache-compiled-test-build
   ELIXIR_ASSERT_TIMEOUT: 1000
 
 permissions:
   contents: read
+
+defaults:
+  run:
+    working-directory: elixir
 
 jobs:
   test:
@@ -18,6 +20,9 @@ jobs:
 
     permissions:
       contents: read
+
+    env:
+      MIX_ENV: test
 
     services:
       db:
@@ -29,14 +34,12 @@ jobs:
           --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Elixir and Cache Dependencies
         id: setup-elixir-and-cache-deps
         uses: ./.github/actions/setup-elixir-and-cache-deps
         with:
-          cache-name-deps: ${{ env.CACHE_NAME_DEPS }}
-          cache-name-compiled: ${{ env.CACHE_NAME_COMPILED_TEST }}
           mix-env: test
           ELIXIR_ASSERT_TIMEOUT: ${{ env.ELIXIR_ASSERT_TIMEOUT }}
 
@@ -52,5 +55,4 @@ jobs:
         run: mix coveralls.github
         continue-on-error: true
         env:
-          MIX_ENV: test
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

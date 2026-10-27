@@ -22,6 +22,7 @@
     {
       "icon": "dashboard",
       "tags": [],
+      "targetBlank": true,
       "title": "TeslaMate",
       "tooltip": "",
       "type": "link",
@@ -104,7 +105,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.2.1",
       "targets": [
         {
           "datasource": {
@@ -190,7 +191,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.2.1",
       "targets": [
         {
           "datasource": {
@@ -288,7 +289,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.2.1",
       "targets": [
         {
           "datasource": {
@@ -412,8 +413,13 @@
       "id": 14,
       "options": {
         "alignValue": "center",
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "displayMode": "list",
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -427,7 +433,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.2.1",
       "targets": [
         {
           "datasource": {
@@ -514,7 +520,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "States",
-  "uid": "xo4BNRkZz",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "xo4BNRkZz"
 }

@@ -37,6 +37,7 @@
     {
       "icon": "dashboard",
       "tags": [],
+      "targetBlank": true,
       "title": "TeslaMate",
       "tooltip": "",
       "type": "link",
@@ -160,6 +161,10 @@
       },
       "id": 2,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [
             "mean",
@@ -167,6 +172,8 @@
             "min"
           ],
           "displayMode": "table",
+          "enableFacetedFilter": false,
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -177,7 +184,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.2.1",
       "targets": [
         {
           "datasource": {
@@ -333,6 +340,10 @@
       },
       "id": 6,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [
             "mean",
@@ -340,6 +351,8 @@
             "min"
           ],
           "displayMode": "table",
+          "enableFacetedFilter": false,
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -350,7 +363,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.2.1",
       "targets": [
         {
           "datasource": {
@@ -535,6 +548,10 @@
       },
       "id": 5,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [
             "mean",
@@ -542,6 +559,8 @@
             "min"
           ],
           "displayMode": "table",
+          "enableFacetedFilter": false,
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -551,7 +570,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.2.1",
       "targets": [
         {
           "datasource": {
@@ -764,7 +783,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "Projected Range",
-  "uid": "riqUfXgRz",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "riqUfXgRz"
 }

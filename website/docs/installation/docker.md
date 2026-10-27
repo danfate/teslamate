@@ -5,9 +5,11 @@ sidebar_label: Docker
 
 This document provides the necessary steps for installation of TeslaMate on any system that runs Docker. You run NixOS? We got you covered, see [NixOS install](nixos.md).
 
+:::info
 This setup is recommended only if you are running TeslaMate **on your home network**, as otherwise your Tesla API tokens might be at risk.
 If you intend to access TeslaMate from the Internet, the recommended way is to use a secure connection (such as a VPN, Cloudflare Tunnel, Tailscale, Zero Tier and a reverse proxy for portless access) for secured access to your TeslaMate instance outside your home network.
-Alternatively, you can use a reverse proxy (such as Traefik, Apache2 or Caddy) with appropriate hardening to secure your TeslaMate instance before expose it to the internet, check out the [advanced guides with Traefik](../advanced_guides/traefik.md) for an example how to use Traefik with TeslaMate. Or you can use the [advanced guides with Apache](../advanced_guides/apache.md) to set up TeslaMate with Apache2, TLS and HTTP Basic Auth.
+Alternatively, you can use a reverse proxy (such as Traefik, Apache2 or Caddy) with appropriate hardening to secure your TeslaMate instance before exposing it to the internet, check out the [advanced guides with Traefik](../advanced_guides/traefik.md) for an example how to use Traefik with TeslaMate. Or you can use the [advanced guides with Apache](../advanced_guides/apache.md) to set up TeslaMate with Apache2, TLS and HTTP Basic Auth.
+:::
 
 ## Requirements
 
@@ -15,6 +17,7 @@ Alternatively, you can use a reverse proxy (such as Traefik, Apache2 or Caddy) w
 - A Machine that's always on, so TeslaMate can continually fetch data
 - At least 1 GB of RAM on the machine for the installation to succeed. It is recommended to have at least 2 GB of RAM for optimal operation.
 - External internet access, to talk to tesla.com
+- Docker images are available for aarch64 (ARM 64-bit) and amd64 (Intel/AMD 64-bit). For Raspberry Pi users: armv7 is no longer supported. You must use a 64-bit Raspberry Pi OS with an ARMv8-compatible board (Raspberry Pi 3 or newer)
 
 ## Instructions
 
@@ -87,15 +90,13 @@ Alternatively, you can use a reverse proxy (such as Traefik, Apache2 or Caddy) w
    docker compose up -d
    ```
 
-### MCU2 upgraded car
-
-If you have a MCU2 upgraded car, you can replace `image: teslamate/teslamate:latest` with `image: ghcr.io/teslamate-org/teslamate:pr-4453` to get the latest version of TeslaMate that supports MCU2 upgraded cars (improved sleeping behavior for MCU2 upgraded cars).
-
 ## Usage
 
-1. Open the web interface [http://your-ip-address:4000](http://localhost:4000)
-2. Sign in with your Tesla Account
-3. The Grafana dashboards are available at [http://your-ip-address:3000](http://localhost:3000). Log in with the default user `admin` (initial password `admin`) and enter a secure password.
+1. [Generate an access and refresh token](tokens.md)
+2. Open the web interface [http://your-ip-address:4000](http://localhost:4000)
+3. Enter the access and refresh token on the sign-in page
+4. The Grafana dashboards are available at [http://your-ip-address:3000](http://localhost:3000). Log in with the default user `admin` (initial password `admin`) and enter a secure password.
+5. In the TeslaMate web interface, go to _Settings → URLs_ and set the _Web App_ and _Dashboards_ URLs, so the links between TeslaMate and Grafana work in both directions.
 
 ## Update
 
