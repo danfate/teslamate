@@ -56,6 +56,6 @@ COPY grafana/dashboards/*.json /dashboards/
 COPY grafana/proc.sql /proc.sql
 COPY grafana/run_init_sql.sh /run_init_sql.sh
 
-ENTRYPOINT ["/bin/bash", "/run_init_sql.sh"]
+ENTRYPOINT ["/bin/sh", "/run_init_sql.sh"]
 
 EXPOSE 3000
