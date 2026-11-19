@@ -172,7 +172,7 @@
           "zoom": 15
         }
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -290,7 +290,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -432,7 +432,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -588,7 +588,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -705,7 +705,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -824,7 +824,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -942,7 +942,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -1051,7 +1051,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -1146,7 +1146,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -1291,9 +1291,10 @@
         },
         "showUnfilled": false,
         "sizing": "auto",
+        "textMode": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -1453,7 +1454,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -1642,7 +1643,7 @@
                 "id": "links",
                 "value": [
                   {
-                    "targetBlank": false,
+                    "targetBlank": true,
                     "title": "Create or edit geo-fence",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.start_path}"
                   }
@@ -1668,7 +1669,7 @@
                 "id": "links",
                 "value": [
                   {
-                    "targetBlank": false,
+                    "targetBlank": true,
                     "title": "Create or edit geo-fence",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.end_path}"
                   }
@@ -1826,9 +1827,10 @@
             "desc": true,
             "displayName": "Date"
           }
-        ]
+        ],
+        "zebraStriping": false
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -2045,7 +2047,7 @@
                 "id": "links",
                 "value": [
                   {
-                    "targetBlank": false,
+                    "targetBlank": true,
                     "title": "Set Cost",
                     "url": "${base_url:raw}/charge-cost/${__data.fields.id.numeric:raw}"
                   }
@@ -2095,7 +2097,7 @@
                 "id": "links",
                 "value": [
                   {
-                    "targetBlank": false,
+                    "targetBlank": true,
                     "title": "Create or edit geo-fence",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.path}"
                   }
@@ -2266,9 +2268,10 @@
             "desc": true,
             "displayName": "Date"
           }
-        ]
+        ],
+        "zebraStriping": false
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -2468,7 +2471,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
@@ -2638,7 +2641,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "13.2.1",
+      "pluginVersion": "13.3.0",
       "targets": [
         {
           "datasource": {
